@@ -1,0 +1,307 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+	资产详情
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+{% endblock %}
+
+
+{% block main_context %}
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-let">
+							<li class="breadcrumb-item"><a href="#">首页</a></li>
+							<li class="breadcrumb-item active">资产详情</li>
+						</ol>
+					</div>
+				</div>
+			</div><!-- /.container-fluid -->
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+
+			<!-- Default box -->
+			<div class="card card-solid">
+				<div class="card-body">
+					{% for prop in property_obj %}
+						<div class="row" style="height: 550px">
+							<div class="col-12 col-sm-6">
+								<h3 class="d-inline-block d-sm-none">{{ prop.p_name }}
+
+								</h3>
+								<div class=" col-sm-9">
+									<img src="/media/{{ prop.p_image }}" class="product-image" alt="Product Image">
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<h3 class="my-3">{{ prop.p_brand.name }}:{{ prop.p_name }}
+									{% if prop.p_status  == '在用' %}
+										<button class="btn btn-sm btn-success float-lg-right"><small>设备使用中</small>
+										</button>
+									{% elif prop.p_status  == '未用' %}
+										<button class="btn btn-sm btn-warning float-lg-right"><small>设备暂未使用</small>
+										</button>
+									{% else %}
+										<button class="btn btn-sm btn-danger float-lg-right"><small>设备已报废</small>
+										</button>
+									{% endif %}
+								</h3>
+								<hr>
+								<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<h5 style="margin-top: 10px">类型:</h5>
+									<label class="btn btn-default text-center" style="margin-left: 10px">
+										<i class=" text-green" style="margin-top: 13px">{{ prop.p_computers.type }} </i>
+										<br>
+									</label>
+								</div>
+								<hr>
+								<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<h5 style="margin-top: 10px">主板:</h5>
+									<label class="btn btn-default text-center" style="margin-left: 10px">
+										<i class=" text-blue"
+										   style="margin-top: 13px">{{ prop.p_computers.mainboard }} </i>
+										<br>
+									</label>
+								</div>
+								<hr>
+								<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<h5 style="margin-top: 10px">CPU:</h5>
+									<label class="btn btn-default text-center" style="margin-left: 10px">
+										<i class=" text-purple" style="margin-top: 13px">{{ prop.p_computers.CPU }} </i>
+										<br>
+									</label>
+								</div>
+								<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<h5 style="margin-top: 10px">内存:</h5>
+									<label class="btn btn-default text-center" style="margin-left: 10px">
+										<i class=" text-red" style="margin-top: 13px">{{ prop.p_computers.memory }} </i>
+										<br>
+									</label>
+								</div>
+								<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<h5 style="margin-top: 10px">硬盘:</h5>
+									<label class="btn btn-default text-center" style="margin-left: 10px">
+										<i class=" text-orange"
+										   style="margin-top: 13px">{{ prop.p_computers.disk }} </i>
+										<br>
+									</label>
+								</div>
+								<hr>
+								<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<h5 style="margin-top: 10px">显卡:</h5>
+									<label class="btn btn-default text-center" style="margin-left: 10px">
+										<i class=" text-green"
+										   style="margin-top: 13px">{{ prop.p_computers.video }} </i>
+										<br>
+									</label>
+								</div>
+								<hr>
+								<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<h5 style="margin-top: 10px">显示器:</h5>
+									<label class="btn btn-default text-center" style="margin-left: 10px">
+										<i class=" text-green"
+										   style="margin-top: 13px">{{ prop.p_computers.displayer }} </i>
+										<br>
+									</label>
+								</div>
+								<hr>
+								<div class="bg-red py-1 px-1 mt-1">
+									<h5 class="mb-0">
+										裸机价格:${{ prop.p_price }}
+									</h5>
+									<h5 class="mt-0">
+										<small>维护价格: ${{ prop.model_price }} </small>
+									</h5>
+								</div>
+								<div class="bg-success py-2 px-1 mt-1">
+									<h2 class="mt-0">
+										<small>总价格: ${{ prop.sum_price }} </small>
+									</h2>
+								</div>
+							</div>
+
+
+						</div>
+						<div class="row mt-4">
+							<nav class="w-100">
+								<div class="nav nav-tabs" id="product-tab" role="tablist">
+									<a class="nav-item nav-link active" id="product-desc-tab" data-toggle="tab"
+									   href="#product-desc" role="tab" aria-controls="product-desc"
+									   aria-selected="true">维修记录</a>
+									<a class="nav-item nav-link" id="product-comments-tab" data-toggle="tab"
+									   href="#product-comments" role="tab" aria-controls="product-comments"
+									   aria-selected="false">升级记录</a>
+									<a class="nav-item nav-link" id="product-comments-tab" data-toggle="tab"
+									   href="#product-work" role="tab" aria-controls="product-comments"
+									   aria-selected="false">日常维护</a>
+								</div>
+							</nav>
+							<div class="tab-content p-3" id="nav-tabContent">
+								<div class="tab-pane fade show active" id="product-desc" role="tabpanel"
+								     aria-labelledby="product-desc-tab">
+									<div class="card-body table-responsive p-0">
+										<table class="table  table-bordered table-hover" id="example">
+											<thead style="margin-top: 40px">
+											<tr>
+												<th>序号</th>
+												<th>申请时间</th>
+												<th>维护类型</th>
+												<th>设备编号</th>
+												<th>设备配件</th>
+												<th>单位</th>
+												<th>数量</th>
+												<th>维护金额</th>
+												<th>维护负责人</th>
+												<th>备注</th>
+											</tr>
+											</thead>
+											<tfoot>
+											{% for row in property_obj %}
+												{% for equi in row.equipment_set.all %}
+													{% if equi.type == '维修设备' %}
+														<tr>
+															<td>{{ forloop.counter }}</td>
+															<td>{{ equi.add_time|date:'Y-m-d' }}</td>
+															<td>
+																<button class="btn btn-xs btn-danger">维修设备</button>
+															</td>
+															<td>{{ equi.propertys.p_id }}</td>
+															<td>{{ equi.model_name }}</td>
+															<td>{{ equi.model_type }}
+															<td>{{ equi.model_num }}</td>
+															<td>￥{{ equi.model_price }}</td>
+															<td>{{ equi.model_username }}</td>
+															<td>{{ equi.note }}</td>
+														</tr>
+													{% endif %}
+												{% endfor %}
+
+											{% endfor %}
+											</tfoot>
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="product-comments" role="tabpanel"
+								     aria-labelledby="product-comments-tab">
+									<div class="card-body table-responsive p-0">
+										<table class="table  table-bordered table-hover" id="example">
+											<thead style="margin-top: 40px">
+											<tr>
+												<th>序号</th>
+												<th>申请时间</th>
+												<th>维护类型</th>
+												<th>设备编号</th>
+												<th>设备配件</th>
+												<th>单位</th>
+												<th>数量</th>
+												<th>维护金额</th>
+												<th>维护负责人</th>
+												<th>备注</th>
+											</tr>
+											</thead>
+											<tfoot>
+											{% for row in property_obj %}
+												{% for equi in row.equipment_set.all %}
+													{% if equi and equi.type == '升级设备' %}
+														<tr>
+															<td>{{ forloop.counter }}</td>
+															<td>{{ equi.add_time|date:'Y-m-d' }}</td>
+															<td>
+																<button class="btn btn-xs btn-warning">升级设备</button>
+															</td>
+															<td>{{ equi.propertys.p_id }}</td>
+															<td>{{ equi.model_name }}</td>
+															<td>{{ equi.model_type }}
+															<td>{{ equi.model_num }}</td>
+															<td>￥{{ equi.model_price }}</td>
+															<td>{{ equi.model_username }}</td>
+															<td>{{ equi.note }}</td>
+														</tr>
+													{% endif %}
+												{% endfor %}
+											{% endfor %}
+											</tfoot>
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="product-work" role="tabpanel"
+								     aria-labelledby="product-comments-tab">
+									<div class="card-body table-responsive p-0">
+										<table class="table  table-bordered table-hover" id="example">
+											<thead style="margin-top: 40px">
+											<tr>
+												<th>序号</th>
+												<th>创建时间</th>
+												<th>提交人</th>
+												<th>问题设备</th>
+												<th>问题类型</th>
+												<th>问题描述</th>
+												<th>完成状态</th>
+												<th>维修人</th>
+											</tr>
+											</thead>
+											<tfoot>
+											{% for row in job_obj %}
+												<tr>
+													<td>{{ forloop.counter }}</td>
+													<td>
+														{{ row.createTime }}
+													</td>
+													<td>{{ row.username.name }}</td>
+													<td>
+														{% if row.username.property_set.all %}
+															{% for fied in row.username.property_set.all %}
+																<a class="btn btn-block btn-outline-warning btn-sm"
+																   href="{% url 'property_detail' fied.p_id %}">{{ fied.p_id }}</a>
+															{% endfor %}
+														{% else %}
+															暂未统计
+														{% endif %}
+													</td>
+													<td>{{ row.typejobs.name }}</td>
+													<td>{{ row.note }}</td>
+													<td>
+														{% if row.status %}
+															<button class="btn btn-sm btn-success">完成</button>
+														{% endif %}
+													</td>
+													<td>{% if row.jobuser == 'hub' %}
+														<button class="btn btn-sm btn-dark">胡兵</button>
+													{% else %}
+														<button class="btn btn-sm btn-dark">杨学铭</button>
+													{% endif %}</td>
+												</tr>
+											{% endfor %}
+											</tfoot>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					{% endfor %}
+				</div>
+				<!-- /.card-body -->
+			</div>
+			<!-- /.card -->
+
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+{% endblock %}
+
+{% block js %}
+	<script>
+
+	</script>
+{% endblock %}

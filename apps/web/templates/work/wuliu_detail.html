@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+{% block title %}
+	物流信息
+{% endblock %}
+
+{% block css %}
+	<style>
+	</style>
+{% endblock %}
+
+{% block main_context %}
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-12">
+						<ol class="breadcrumb float-sm-left">
+							<li class="breadcrumb-item"><a href="{% url 'home' %}">首页</a></li>
+							<li class="breadcrumb-item active">物流追踪</li>
+						</ol>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card-info">
+							<div class="card-header">
+								<h3 class="card-title">物流信息</h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body table-responsive p-0">
+								<div class="tab-pane" id="timeline" style="margin-top: 40px">
+									<!-- The timeline -->
+									<div class="timeline timeline-inverse">
+										<!-- timeline time label -->
+										{% if request.session.wuliu_list %}
+											{% for itme in request.session.wuliu_list %}
+												<div>
+													<i class="fas fa-car bg-info"></i>
+													<div class="timeline-item">
+														<span class="time"><i
+																class="far fa-clock"></i>{{ itme.time }}</span>
+														<h3 class="timeline-header border-0">
+															{{ itme.status }}
+														</h3>
+													</div>
+												</div>
+											{% endfor %}
+										{% else %}
+											<div>
+													<i class="fas fa-car bg-info"></i>
+													<div class="timeline-item">
+														<span class="time"><i
+																class="far fa-clock"></i></span>
+														<h3 class="timeline-header border-0">
+															暂无物流信息
+														</h3>
+													</div>
+												</div>
+
+										{% endif %}
+
+									</div>
+								</div>
+
+							</div>
+							<!-- /.card-body -->
+
+						</div>
+						<!-- /.card -->
+					</div>
+				</div>
+				<div class="row">
+
+				</div>
+			</div>
+		</section>
+
+		<!-- /.content -->
+	</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

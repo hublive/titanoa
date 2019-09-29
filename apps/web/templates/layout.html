@@ -1,0 +1,91 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+	<title>{% block title %}
+
+	{% endblock %}</title>
+
+	<!-- Font Awesome Icons -->
+	<link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+	<!-- overlayScrollbars -->
+	<link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="{% static 'css/adminlte.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/left.css' %}">
+	<!-- Google Font: Source Sans Pro -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+	{% block css %}
+
+	{% endblock %}
+</head>
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed fixed">
+<div class="wrapper">
+	<!-- 头部导航 -->
+	{% include 'compent/top.html' %}
+	<!-- /.navbar -->
+
+	<!-- 侧边栏 -->
+	{% include 'compent/left.html' %}
+
+{#	<!-- 内容区域 -->#}
+{#	<iframe id="menuFrame" name="menuFrame" src="{% url 'index' %}" style="overflow:visible;" scrolling="yes" frameborder="no"#}
+{#	        height="100%" width="100%">#}
+{##}
+{#	</iframe>#}
+		{% block main_context %}
+
+		{% endblock %}
+	<!-- /.content-wrapper -->
+
+	<!-- Control Sidebar -->
+	<aside class="control-sidebar control-sidebar-dark">
+		<!-- Control sidebar content goes here -->
+	</aside>
+	<!-- /.control-sidebar -->
+
+	<!-- 底部区域 -->
+	{% include 'compent/footer.html' %}
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'js/adminlte.js' %}"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="{% static 'js/demo.js' %}"></script>
+
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="{% static 'plugins/jquery-mousewheel/jquery.mousewheel.js' %}"></script>
+<script src="{% static 'plugins/raphael/raphael.min.js' %}"></script>
+<script src="{% static 'plugins/jquery-mapael/jquery.mapael.min.js' %}"></script>
+<script src="{% static 'plugins/jquery-mapael/maps/world_countries.min.js' %}"></script>
+<!-- ChartJS -->
+<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
+
+<!-- PAGE SCRIPTS -->
+<script>
+    $('.sidebar a').each(function () {
+        if (location.href.indexOf(this.href) === 0) {
+            console.log($(this));
+            $(this).parent().addClass('active')
+        }
+    })
+</script>
+{% block js %}
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,141 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+	设备配置
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+{% endblock %}
+
+
+{% block main_context %}
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-12">
+						<ol class="breadcrumb float-sm-left">
+							<li class="breadcrumb-item"><a href="{% url 'home' %}">首页</a></li>
+							<li class="breadcrumb-item active">设备信息</li>
+						</ol>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card-info">
+							<div class="card-header">
+								<h3 class="card-title">设备列表</h3>
+								<div class="card-tools">
+
+									<form action="{% url 'computer' %}" method="get">
+										<div class="input-group input-group-sm" style="width: 150px;">
+											<input type="text" name="search" class="form-control float-right"
+											       placeholder="Search">
+
+											<div class="input-group-append">
+												<button type="submit" class="btn btn-default"><i
+														class="fas fa-search"></i>
+												</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body table-responsive p-0">
+								<table class="table  table-bordered table-hover" id="example">
+									<div style="margin-left: 10px;margin-top: 10px">
+										<a href="{% url 'computer' %}" class="btn btn-sm btn-success">显示全部</a>
+									</div>
+									<div style="height: 10px"></div>
+									<a href="#" class="btn btn-sm btn-secondary" style="margin-left: 10px">筛选</a>
+									<div style="margin-top: 10px">
+									</div>
+									<div style="height: 20px"></div>
+									<thead style="margin-top: 40px">
+									<tr>
+										<th>序号</th>
+										<th>设备名称</th>
+										<th>设备类型</th>
+										<th>主板</th>
+										<th>CPU</th>
+										<th>内存</th>
+										<th>硬盘</th>
+										<th>显卡</th>
+										<th>显示器</th>
+									</tr>
+									</thead>
+									<tfoot>
+									{% for row in all_computer %}
+										<tr>
+											<td>{{ row.id }}</td>
+											<td>{{ row.name }}</td>
+											<td>
+												{% if row.type == '笔记本电脑' %}
+													<button class="btn-xs btn btn-secondary">笔记本电脑</button>
+												{% elif row.type == '组装台式机' %}
+													<button class="btn-xs btn btn-primary">组装台式机</button>
+												{% elif row.type == '品牌台式电脑' %}
+													<button class="btn-xs btn btn-info">品牌台式电脑</button>
+												{% elif row.type == '打印机' %}
+													<button class="btn-xs btn btn-info">打印机</button>
+												{% endif %}
+											</td>
+											<td>{{ row.mainboard }}</td>
+											<td>{{ row.CPU }}</td>
+											<td>{{ row.memory }}</td>
+											<td>{{ row.disk }}</td>
+											<td>{{ row.video }}</td>
+											<td>{{ row.displayer }}</td>
+										</tr>
+									{% endfor %}
+									</tfoot>
+								</table>
+							</div>
+							<!-- /.card-body -->
+							<div class="" style="float: left;margin-top: 15px;margin-left: 20px">
+								<div class="dataTables_info" id="example" role="status" aria-live="polite">
+									总数：<span class="badge badge-danger left">{{ all_computer.count }}</span>
+								</div>
+								<div class="dataTables_paginate paging_simple_numbers"
+								     style="float: right ;margin-top: -25px;margin-right: 10px">
+									<div class="dataTables_paginate paging_simple_numbers">
+										<nav aria-label="Page navigation">
+											<ul class="pagination">
+												{{ page.show_li }}
+											</ul>
+										</nav>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!-- /.card -->
+					</div>
+				</div>
+				<div class="row">
+
+				</div>
+			</div>
+		</section>
+
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+{% endblock %}
+
+{% block js %}
+	<script>
+
+	</script>
+{% endblock %}

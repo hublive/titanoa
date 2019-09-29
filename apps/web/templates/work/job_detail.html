@@ -1,0 +1,1767 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+	报表展示
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+{% endblock %}
+
+
+{% block main_context %}
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-left">
+							<li class="breadcrumb-item"><a href="#">首页</a></li>
+							<li class="breadcrumb-item active">工作展示</li>
+						</ol>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<div class="content">
+			<div class="row col-md-12 ">
+				<div class="col-md-12 col-md-offset-2s">
+					<div class="info-box">
+						<a href="{% url 'job_detail' %}?search=2019-01" class="btn btn-sm btn-success"
+						   style="margin-left:10px;width: 80px;height:30px;margin-top: 20px">一月</a>
+						<a href="{% url 'job_detail' %}?search=2019-02" class="btn btn-sm btn-success"
+						   style="margin-left:20px;width: 120px;height:30px;margin-top: 20px">二月</a>
+						<a href="{% url 'job_detail' %}?search=2019-03" class="btn btn-sm btn-success"
+						   style="margin-left:20px;width: 120px;height:30px;margin-top: 20px">三月</a>
+						<a href="{% url 'job_detail' %}?search=2019-04" class="btn btn-sm btn-success"
+						   style="margin-left:20px;width: 120px;height:30px;margin-top: 20px">四月</a>
+						<a href="{% url 'job_detail' %}?search=2019-05" class="btn btn-sm btn-success"
+						   style="margin-left:20px;width: 120px;height:30px;margin-top: 20px">五月</a>
+						<a href="{% url 'job_detail' %}?search=2019-06" class="btn btn-sm btn-success"
+						   style="margin-left:20px;width: 120px;height:30px;margin-top: 20px">六月</a>
+						<a href="{% url 'job_detail' %}?search=2019-07" class="btn btn-sm btn-success"
+						   style="margin-left:20px;width: 120px;height:30px;margin-top: 20px">七月</a>
+						<a href="{% url 'job_detail' %}?search=2019-08" class="btn btn-sm btn-success"
+						   style="margin-left:20px;width: 120px;height:30px;margin-top: 20px">八月</a>
+						<a href="{% url 'job_detail' %}?search=2019-09" class="btn btn-sm btn-success"
+						   style="margin-left:20px;width: 120px;height:30px;margin-top: 20px">九月</a>
+						<a href="{% url 'job_detail' %}?search=2019-10" class="btn btn-sm btn-success"
+						   style="margin-left:20px;width: 120px;height:30px;margin-top: 20px">十月</a>
+						<a href="{% url 'job_detail' %}?search=2019-11" class="btn btn-sm btn-success"
+						   style="margin-left:20px;width: 120px;height:30px;margin-top: 20px">十一月</a>
+						<a href="{% url 'job_detail' %}?search=2019-12" class="btn btn-sm btn-success"
+						   style="margin-left:20px;width: 120px;height:30px;margin-top: 20px">十二月</a>
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<div class="row">
+				<div class="col-12 col-sm-6 col-md-3">
+					<div class="info-box">
+						<span class="info-box-icon bg-info elevation-1"><i class="fas fa-user"></i></span>
+
+						<div class="info-box-content">
+							<span class="info-box-text">员工总数</span>
+							<span class="info-box-number">{{ all_user_num }}</span>
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+				<div class="col-12 col-sm-6 col-md-3">
+					<div class="info-box mb-3">
+						<span class="info-box-icon bg-danger elevation-1"><i class="fas fa-tv"></i></span>
+
+						<div class="info-box-content">
+							<span class="info-box-text">设备总数</span>
+							<span class="info-box-number">{{ all_property_num }}</span>
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+				<div class="clearfix hidden-md-up"></div>
+
+				<div class="col-12 col-sm-6 col-md-3">
+					<div class="info-box mb-3">
+							<span class="info-box-icon bg-success elevation-1"><i
+									class="fas fa-american-sign-language-interpreting"></i></span>
+
+						<div class="info-box-content">
+							<span class="info-box-text">工作记录</span>
+							<span class="info-box-number">{{ all_jobdetail_num }}</span>
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+				<div class="col-12 col-sm-6 col-md-3">
+					<div class="info-box mb-3">
+						<span class="info-box-icon bg-warning elevation-1"><i class="fas fa-print"></i></span>
+
+						<div class="info-box-content">
+							<span class="info-box-text">耗材数量</span>
+							<span class="info-box-number">{{ all_print_num }}</span>
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<div class="row">
+				<div class="col-12 col-sm-6 col-md-3">
+					<div class="info-box">
+						<span class="info-box-icon bg-info elevation-1"><i class="fas fa-desktop"></i></span>
+
+						<div class="info-box-content">
+							<span class="info-box-text">固定资产</span>
+							<span class="info-box-number">{{ all_fixed_num }}</span>
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+				<div class="col-12 col-sm-6 col-md-3">
+					<div class="info-box mb-3">
+						<span class="info-box-icon bg-secondary elevation-1"><i class="fas fa-dollar-sign"></i></span>
+
+						<div class="info-box-content">
+							<span class="info-box-text">设备升级</span>
+							<span class="info-box-number">{{ all_equipment_num }}</span>
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+
+				<!-- fix for small devices only -->
+				<div class="clearfix hidden-md-up"></div>
+
+				<div class="col-12 col-sm-6 col-md-3">
+					<div class="info-box mb-3">
+							<span class="info-box-icon bg-success elevation-1"><i
+									class="fas fa-shopping-cart"></i></span>
+
+						<div class="info-box-content">
+							<span class="info-box-text">设备验收</span>
+							<span class="info-box-number">{{ all_check_num }}</span>
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+				<div class="col-12 col-sm-6 col-md-3">
+					<div class="info-box mb-3">
+						<span class="info-box-icon bg-danger elevation-1"><i class="fas fa-trash"></i></span>
+
+						<div class="info-box-content">
+							<span class="info-box-text">设备报废</span>
+							<span class="info-box-number">{{ all_baofei_num }}</span>
+						</div>
+						<!-- /.info-box-content -->
+					</div>
+					<!-- /.info-box -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- 用户展示-->
+			<div class="container-fluid">
+				<h5 class="mb-2">
+					<a class="btn btn-sm btn-warning" href="{% url 'userinfo' %}">用户展示</a>
+				</h5>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">部门人员总数</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart" style="height: 400px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<!-- /.col-md-6 -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- 设备信息-->
+			<div class="container-fluid">
+				<h5 class="mb-2">
+					<a class="btn btn-sm btn-warning" href="{% url 'property' %}">设备信息</a>
+					<a class="btn btn-sm btn-info" href="{% url 'property_excel' %}">导出报表</a>
+				</h5>
+				<div class="row">
+					<div class="col-lg-3">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">型号分类</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart2" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<div class="col-lg-3">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">供应商分类</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart3" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<div class="col-lg-3">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">每日总量</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart4" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<div class="col-lg-3">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">设备状态</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart5" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<!-- /.col-md-6 -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- 工作信息-->
+			<div class="container-fluid">
+				<h5 class="mb-2">
+					<a class="btn btn-sm btn-warning" href="{% url 'job_works' %}">工作信息</a>
+					<a class="btn btn-sm btn-info" href="{% url 'job_excel' %}">导出报表</a>
+				</h5>
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">每日维修</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart6" style="height: 500px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<div class="col-lg-6">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">维修类型</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart7" style="height: 500px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<!-- /.col-md-6 -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- 耗材管理-->
+			<div class="container-fluid">
+				<h5 class="mb-2">
+					<a class="btn btn-sm btn-warning" href="{% url 'prints' %}">
+						耗材管理
+					</a>
+					<a class="btn btn-sm btn-info" href="{% url 'print_excel' %}">导出报表</a>
+				</h5>
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">设备使用数量</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart8" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<div class="col-lg-4">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">耗材分类</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart9" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<div class="col-lg-4">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">所在使用数量</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart10" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<!-- /.col-md-6 -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- 固定资产-->
+			<div class="container-fluid">
+				<h5 class="mb-2">
+					<a class="btn btn-sm btn-warning" href="{% url 'fixedAssets' %}">
+						固定资产
+					</a>
+					<a class="btn btn-sm btn-info" href="{% url 'fixedAssets_excel' %}">导出报表</a>
+				</h5>
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">Online Store Visitors</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart11" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<div class="col-lg-6">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">Online Store Visitors</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart12" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<!-- /.col-md-6 -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- 设备升级-->
+			<div class="container-fluid">
+				<h5 class="mb-2">
+					<a class="btn btn-sm btn-warning" href="{% url 'fixedAssets' %}">
+						设备升级
+					</a>
+					<a class="btn btn-sm btn-info" href="{% url 'equipment_excel' %}">导出报表</a>
+				</h5>
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">部门申请数量</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart13" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<div class="col-lg-6">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">类型数量</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart14" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<!-- /.col-md-6 -->
+				</div>
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">时间分类</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart15" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<div class="col-lg-6">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">分类价格</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart16" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<!-- /.col-md-6 -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- 设备验收-->
+			<div class="container-fluid">
+				<h5 class="mb-2">
+					<a class="btn btn-sm btn-warning" href="{% url 'check' %}">
+						设备验收
+					</a>
+					<a class="btn btn-sm btn-info" href="{% url 'cleck_excel' %}">导出报表</a>
+				</h5>
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">公司分类</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart17" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<div class="col-lg-4">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">单日验收</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart19" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<div class="col-lg-4">
+						<div class="card  card-outline card-success">
+							<div class="card-header border-0">
+								<div class="d-flex justify-content-between">
+									<h3 class="card-title">供应商占比</h3>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="position-relative">
+									<div class="box-body chart-responsive">
+										<div class="chart" id="line-chart20" style="height: 300px;"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.card -->
+						<!-- /.card -->
+					</div>
+					<!-- /.col-md-6 -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- 设备报废-->
+			{% if all_baofei_num == 0 %}
+			{% else %}
+				<div class="container-fluid">
+					<h5 class="mb-2">
+						<a class="btn btn-sm btn-warning" href="{% url 'baofei' %}">
+							设备报废
+						</a>
+					</h5>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="card  card-outline card-success">
+								<div class="card-header border-0">
+									<div class="d-flex justify-content-between">
+										<h3 class="card-title">分类价格</h3>
+									</div>
+								</div>
+								<div class="card-body">
+									<div class="position-relative">
+										<div class="box-body chart-responsive">
+											<div class="chart" id="line-chart16" style="height: 300px;"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.card -->
+							<!-- /.card -->
+						</div>
+						<div class="col-lg-6">
+							<div class="card  card-outline card-success">
+								<div class="card-header border-0">
+									<div class="d-flex justify-content-between">
+										<h3 class="card-title">分类价格</h3>
+									</div>
+								</div>
+								<div class="card-body">
+									<div class="position-relative">
+										<div class="box-body chart-responsive">
+											<div class="chart" id="line-chart16" style="height: 300px;"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.card -->
+							<!-- /.card -->
+						</div>
+						<!-- /.col-md-6 -->
+					</div>
+					<!-- /.row -->
+				</div>
+			{% endif %}
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+{% endblock %}
+
+{% block js %}
+	<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts-en.common.js"></script>
+	<script type="text/javascript">
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('line-chart'));
+        option = {
+            color: ['#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 500// legend 横向布局。
+            },
+            grid: {
+                left: '10%',
+                right: '10%',
+                bottom: '10%',
+                {#                height:'80%',#}
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'blue'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for u in user %}
+                        "{{ u.dept }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for u in user %}
+                        "{{ u.dept }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '各部门人数',
+                    type: 'bar',
+                    barWidth: '60%',
+                    data: [{%for u in user %}'{{ u.count }}',{% endfor %}]
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+        var myChart1 = echarts.init(document.getElementById('line-chart2'));
+        option1 = {
+            color: ['#749f83'],
+            {#                    color: ['#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],#}
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'yellow'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in p_name_count %}
+                        "{{ p.p_name }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in p_name_count %}
+                        "{{ p.p_name }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '型号数量',
+                    type: 'bar',
+                    barWidth: '10%',
+                    data: [{%for p in p_name_count %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart1.setOption(option1);
+
+
+        var myChart2 = echarts.init(document.getElementById('line-chart3'));
+        option2 = {
+            color: ['#c23531'],
+            {#                    color: ['#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],#}
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'yellow'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in p_brand_count %}
+                        "{{ p.p_brand }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in p_brand_count %}
+                        "{{ p.p_brand__name }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '采购数量',
+                    type: 'bar',
+                    barWidth: '10%',
+                    data: [{%for p in p_brand_count %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        myChart2.setOption(option2);
+
+
+        var myChart3 = echarts.init(document.getElementById('line-chart4'));
+        option3 = {
+            color: ['#d48265'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'red'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in p_time_count %}
+                        "{{ p.p_time }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in p_time_count %}
+                        "{{ p.p_time }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '每日录入数量',
+                    type: 'line',
+                    areaStyle: {},
+                    barWidth: '10%',
+                    data: [{%for p in p_time_count %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        myChart3.setOption(option3);
+
+
+        var myChart4 = echarts.init(document.getElementById('line-chart5'));
+        option4 = {
+            title: {
+                text: '设备状态',
+                {% for p in p_status_count %}
+                    subtext: "未用:" +{{ p.count }},
+                {% endfor %}
+                {#x: 'center'#}
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                x: 'center',
+                y: 'bottom',
+                data: [{% for p in p_status_count %}
+                    "{{ p.p_status }}"{% if not forloop.last%},{% endif %}
+                {% endfor %}
+                ]
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {
+                        show: true,
+                        type: ['pie', 'funnel']
+                    },
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            series: [
+                {
+                    name: '使用',
+                    type: 'pie',
+                    roseType: 'area',
+                    data: [
+                        {% for p in p_status_count %}
+                            {value:{{ p.count }}, name: '{{ p.p_status }}'}{% if not forloop.last%},{% endif %}
+                        {% endfor %}
+                    ]
+                }
+            ]
+        };
+        myChart4.setOption(option4);
+
+
+        var myChart5 = echarts.init(document.getElementById('line-chart6'));
+        option5 = {
+            color: ['#d48265'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'red'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in j_time_count %}
+                        "{{ p.createTime}}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in j_time_count %}
+                        "{{ p.createTime}}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '每日维修数量',
+                    type: 'bar',
+                    {#                    areaStyle: {},#}
+                    barWidth: '10%',
+                    data: [{%for p in j_time_count %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        myChart5.setOption(option5);
+
+
+        var myChart6 = echarts.init(document.getElementById('line-chart7'));
+        option6 = {
+            title: {
+                text: '维修类型',
+                subtext: '总数量',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                x: 'center',
+                y: 'bottom',
+                data: [{% for p in j_type_count %}
+                    "{{ p.typejobs__name }}"{% if not forloop.last%},{% endif %}
+                {% endfor %}
+                ]
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {
+                        show: true,
+                        type: ['pie', 'funnel']
+                    },
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            series: [
+                {
+                    name: '数量',
+                    type: 'pie',
+                    roseType: 'area',
+                    data: [
+                        {% for p in j_type_count %}
+                            {value:{{ p.count }}, name: '{{ p.typejobs__name }}'}{% if not forloop.last%},{% endif %}
+                        {% endfor %}
+                    ]
+                }
+            ]
+        };
+        myChart6.setOption(option6);
+
+
+        var myChart7 = echarts.init(document.getElementById('line-chart8'));
+        option7 = {
+            color: ['#749f83'],
+            {#                    color: ['#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],#}
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'yellow'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in model_name_count %}
+                        "{{ p.model_name__name }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in model_name_count %}
+                        "{{ p.model_name__name }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '设备使用数量',
+                    type: 'bar',
+                    barWidth: '10%',
+                    data: [{%for p in model_name_count %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        myChart7.setOption(option7);
+
+
+        var myChart8 = echarts.init(document.getElementById('line-chart9'));
+        option8 = {
+            color: ['#c23531'],
+            {#                    color: ['#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],#}
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'yellow'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in model_name_type_count %}
+                        "{{ p.model_name_type__name }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in model_name_type_count %}
+                        "{{ p.model_name_type__name }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '各耗材使用数量',
+                    type: 'bar',
+                    barWidth: '10%',
+                    data: [{%for p in model_name_type_count %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        myChart8.setOption(option8);
+
+
+        var myChart9 = echarts.init(document.getElementById('line-chart10'));
+        option9 = {
+            color: ['#d48265'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'red'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in p_addr %}
+                        "{{ p.addr }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in p_addr %}
+                        "{{ p.addr }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '地方所用数量',
+                    type: 'bar',
+                    areaStyle: {},
+                    barWidth: '10%',
+                    data: [{%for p in p_addr %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        myChart9.setOption(option9);
+
+        var myChart10 = echarts.init(document.getElementById('line-chart11'));
+        option10 = {
+            color: ['#749f83'],
+            {#                    color: ['#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],#}
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'yellow'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in f_time_cout %}
+                        "{{ p.f_time }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in f_time_cout %}
+                        "{{ p.f_time }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '每日发放数量',
+                    type: 'bar',
+                    barWidth: '10%',
+                    data: [{%for p in f_time_cout %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        myChart10.setOption(option10);
+
+        var myChart11 = echarts.init(document.getElementById('line-chart12'));
+        option11 = {
+            title: {
+                text: '地区分布',
+                subtext: '',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                x: 'center',
+                y: 'bottom',
+                data: [{% for p in f_addr_count %}
+                    "{{ p.f_addr }}"{% if not forloop.last%},{% endif %}
+                {% endfor %}
+                ]
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {
+                        show: true,
+                        type: ['pie', 'funnel']
+                    },
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            series: [
+                {
+                    name: '数量',
+                    type: 'pie',
+                    roseType: 'area',
+                    data: [
+                        {% for p in f_addr_count %}
+                            {value:{{ p.count }}, name: '{{ p.f_addr }}'}{% if not forloop.last%},{% endif %}
+                        {% endfor %}
+                    ]
+                }
+            ]
+        };
+        myChart11.setOption(option11);
+
+        var myChart12 = echarts.init(document.getElementById('line-chart13'));
+        option12 = {
+            color: ['#749f83'],
+            {#                    color: ['#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],#}
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'yellow'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in e_dept_count %}
+                        "{{ p.user__dept }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in e_dept_count %}
+                        "{{ p.user__dept }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '部门申请数量',
+                    type: 'bar',
+                    barWidth: '10%',
+                    data: [{%for p in e_dept_count %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        myChart12.setOption(option12);
+
+        var myChart13 = echarts.init(document.getElementById('line-chart14'));
+        option13 = {
+            color: ['#c23531'],
+            {#                    color: ['#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],#}
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'yellow'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in e_model_count %}
+                        "{{ p.model_name }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in e_model_count %}
+                        "{{ p.model_name }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '各类型数量',
+                    type: 'bar',
+                    barWidth: '10%',
+                    data: [{%for p in e_model_count %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        myChart13.setOption(option13);
+
+        var myChart14 = echarts.init(document.getElementById('line-chart15'));
+        option14 = {
+            color: ['#d48265'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'red'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in e_time %}
+                        "{{ p.add_time }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in e_time %}
+                        "{{ p.add_time }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '日维修数量',
+                    type: 'bar',
+                    areaStyle: {},
+                    barWidth: '10%',
+                    data: [{%for p in e_time %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        myChart14.setOption(option14);
+
+        var myChart15 = echarts.init(document.getElementById('line-chart16'));
+        option15 = {
+            title: {
+                text: '分类价格',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                x: 'center',
+                y: 'bottom',
+                data: [{% for p in e_model_price_count %}
+                    "{{ p.model_name }}"{% if not forloop.last%},{% endif %}
+                {% endfor %}
+                ]
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {
+                        show: true,
+                        type: ['pie', 'funnel']
+                    },
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            series: [
+                {
+                    name: '采购',
+                    type: 'pie',
+                    roseType: 'area',
+                    data: [
+                        {% for p in e_model_price_count %}
+                            {value:{{ p.sum }}, name: '{{ p.model_name }}'}{% if not forloop.last%},{% endif %}
+                        {% endfor %}
+                    ]
+                }
+            ]
+        };
+        myChart15.setOption(option15);
+
+        var myChart16 = echarts.init(document.getElementById('line-chart17'));
+        option16 = {
+            color: ['#749f83'],
+            {#                    color: ['#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],#}
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'yellow'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in c_company_count %}
+                        "{{ p.c_company }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in c_company_count %}
+                        "{{ p.c_company }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '采购数量',
+                    type: 'bar',
+                    barWidth: '10%',
+                    data: [{%for p in c_company_count %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        myChart16.setOption(option16);
+
+        var myChart18 = echarts.init(document.getElementById('line-chart19'));
+        option18 = {
+            color: ['#d48265'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {                   // legend 放在底部中间。
+                height: 400// legend 横向布局。
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '3%',
+                containLabel: true
+            },
+            // 高亮样式。
+            emphasis: {
+                itemStyle: {
+                    // 高亮时点的颜色。
+                    color: 'red'
+                },
+                label: {
+                    show: true,
+                    // 高亮时标签的文字。
+                    formatter: [{%for p in c_time_count %}
+                        "{{ p.c_time }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}]
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [{%for p in c_time_count %}
+                        "{{ p.c_time }}"{% if not forloop.last%},{% endif %}
+                    {% endfor %}],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '单日验收',
+                    type: 'bar',
+                    areaStyle: {},
+                    barWidth: '10%',
+                    data: [{%for p in c_time_count %}'{{ p.count }}',{% endfor %}]
+                }
+            ]
+        };
+        myChart18.setOption(option18);
+
+
+        var myChart19 = echarts.init(document.getElementById('line-chart20'));
+        option19 = {
+            title: {
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                x: 'center',
+                y: 'bottom',
+                data: [{% for p in c_gys_count %}
+                    "{{ p.c_property__p_organization__name }}"{% if not forloop.last%},{% endif %}
+                {% endfor %}
+                ]
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {
+                        show: true,
+                        type: ['pie', 'funnel']
+                    },
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            series: [
+                {
+                    name: '采购',
+                    type: 'pie',
+                    roseType: 'area',
+                    data: [
+                        {% for p in c_gys_count %}
+                            {
+                                value:{{ p.count }},
+                                name: '{{ p.c_property__p_organization__name }}'
+                            }{% if not forloop.last%},{% endif %}
+                        {% endfor %}
+                    ]
+                }
+            ]
+        };
+        myChart19.setOption(option19);
+
+	</script>
+{% endblock %}

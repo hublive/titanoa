@@ -1,0 +1,156 @@
+/*.biaoti {*/
+/**/
+/*font-size: 26px;*/
+/*border-bottom: 0;*/
+/*background-color: red;*/
+/*color: black;*/
+
+/*}*/
+
+.btgn {
+    font-family: "Microsoft YaHei UI";
+    font-size: 20px;
+    text-align: center;
+}
+
+body, div, ol, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, pre, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+    /*margin: 0;*/
+    /*padding: 0;*/
+
+}
+
+.header {
+    visibility: hidden;
+}
+
+.footer {
+    visibility: hidden;
+}
+
+/*Hidden Margin*/
+@page {
+    size: auto;
+    margin: 0cm;
+}
+
+/*Show header footer When Print*/
+@media print {
+    BODY {
+        font-size: 9pt;
+    }
+
+    #topRight:after {
+        content: counter(Pages);
+    }
+
+    #topCenter:after {
+        content: string(DOCTYPE);
+    }
+
+    .header {
+        visibility: visible;
+    }
+
+    .footer {
+        visibility: visible;
+    }
+
+    .noprint {
+        visibility: hidden;
+    }
+}
+
+.row {
+    width: 758px;
+    height: 987px;
+    /*padding-right: 3px;*/
+    border-left-width: 7px
+}
+
+.headers {
+    width: 200mm;
+    height: 90px;
+    font-size: 20px;
+    font-family: "Microsoft YaHei UI";
+    text-align: center;
+}
+
+.date {
+    float: right;
+    margin-top: -31px;
+}
+
+.content {
+    width: 200mm;
+    height: 850px;
+    border: 2px solid black;
+}
+
+.c1 {
+    height: 38px;
+    width: 200mm;
+    border: 1px solid black;
+}
+
+.c2 {
+    height: 103px;
+    width: 200mm;
+    border: 1px solid black;
+    padding-right: -3px;
+}
+
+.c21 {
+    float: left;
+    width: 30%;
+    height: 103px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.c22 {
+    float: left;
+    width: 69.5%;
+    height: 103px;
+}
+
+.c22 ul li {
+
+    font-size: 14px;
+    float: left;
+    text-align: left;
+    margin-right: 10px;
+
+}
+
+.c22-1 {
+    float: left;
+    margin-top: 28px;
+    font-size: 18px;
+    margin-left: 180px;
+}
+
+.c3 {
+    height: 70px;
+    width: 200mm;
+    border: 1px solid black;
+}
+
+.c31 {
+    float: left;
+    width: 30%;
+    height: 68px;
+    border: 1px solid black;
+}
+
+.h6 {
+    float: left;
+    margin-left: 180px;
+    font-size: 18px;
+}
+
+.c32 {
+    float: left;
+    width: 69.5%;
+    height: 65px;
+    text-align: left;
+}

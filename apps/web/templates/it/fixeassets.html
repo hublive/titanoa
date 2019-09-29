@@ -1,0 +1,145 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+	固定资产
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+{% endblock %}
+
+
+{% block main_context %}
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-12">
+						<ol class="breadcrumb float-sm-left">
+							<li class="breadcrumb-item"><a href="{% url 'home' %}">首页</a></li>
+							<li class="breadcrumb-item active">固定资产</li>
+						</ol>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card-info">
+							<div class="card-header">
+								<h3 class="card-title">固定资产</h3>
+								<div class="card-tools">
+
+									<form action="{% url 'fixedAssets' %}" method="get">
+										<div class="input-group input-group-sm" style="width: 150px;">
+											<input type="text" name="search" class="form-control float-right"
+											       placeholder="Search">
+
+											<div class="input-group-append">
+												<button type="submit" class="btn btn-default"><i
+														class="fas fa-search"></i>
+												</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body table-responsive p-0">
+								<table class="table  table-bordered table-hover" id="example">
+									<div style="margin-left: 10px;margin-top: 10px">
+										<a href="{% url 'fixedAssets' %}" class="btn btn-sm btn-success">显示全部</a>
+									</div>
+									<div style="height: 10px"></div>
+									<div style="margin-top: 10px">
+										<a href="#" class="btn btn-sm btn-secondary"
+										   style="margin-left: 10px">月份筛选:</a>
+										{% for date in dateList %}
+											<a href="{% url 'fixedAssets' %}?search={{ date }}"
+											   class="btn btn-info btn-xs" style="margin-left: 14px">
+												{% if date != '' %}
+													{{ date }}
+												{% endif %}
+											</a>
+										{% endfor %}
+									</div>
+									<div style="height: 20px"></div>
+									<thead style="margin-top: 40px">
+									<tr>
+										<th>序号</th>
+										<th>员工姓名</th>
+										<th>员工部门</th>
+										<th>资产编号</th>
+										<th>资产分类</th>
+										<th>资产来源</th>
+										<th>发放日期</th>
+										<th>归属城市</th>
+										<th>备注</th>
+										<th>选项</th>
+									</tr>
+									</thead>
+									<tfoot>
+									{% for row in all_fixedAssets %}
+										<tr>
+											<td>{{ forloop.counter }}</td>
+											<td>{{ row.f_property.p_user.name }}</td>
+											<td>{{ row.f_property.p_user.dept }}</td>
+											<td>{{ row.f_property.p_id }}</td>
+											<td>{{ row.f_property.p_computers.type }}</td>
+											<td>{{ row.f_property.p_organization }}</td>
+											<td>{{ row.f_time }}</td>
+											<td>{{ row.f_addr }}</td>
+											<td>{{ row.f_note }}</td>
+											<td>
+												<a href="{% url 'fixedAssets_addr' %}?f_id={{ row.f_property.p_id }}" class="btn btn-sm btn-secondary" target="_blank">固定资产</a>
+											</td>
+										</tr>
+									{% endfor %}
+									</tfoot>
+								</table>
+							</div>
+							<!-- /.card-body -->
+							<div class="" style="float: left;margin-top: 15px;margin-left: 20px">
+								<div class="dataTables_info" id="example" role="status" aria-live="polite">
+									搜索数量：<span class="badge badge-danger left">{{ all_fixedAsset.count }}</span>
+									总数：<span class="badge badge-success left">{{ all_fixeds.count }}</span>
+								</div>
+								<div class="dataTables_paginate paging_simple_numbers"
+								     style="float: right ;margin-top: -25px;margin-right: 10px">
+									<div class="dataTables_paginate paging_simple_numbers">
+										<nav aria-label="Page navigation">
+											<ul class="pagination">
+												{{ page.show_li }}
+											</ul>
+										</nav>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!-- /.card -->
+					</div>
+				</div>
+				<div class="row">
+
+				</div>
+			</div>
+		</section>
+
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+{% endblock %}
+
+{% block js %}
+	<script>
+
+	</script>
+{% endblock %}

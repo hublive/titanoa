@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block title %}
+	首页
+{% endblock %}
+
+{% block css %}
+	<style>
+		.content-wrapper {
+			color: red;
+			font-size: 23px;
+			text-align: center;
+			background-color: grey;
+		}
+
+		h1 {
+			padding-top: 350px;
+		}
+	</style>
+{% endblock %}
+
+{% block main_context %}
+	<div class="content-wrapper">
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<h1>行政管理系统</h1>
+			</div><!--/. container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

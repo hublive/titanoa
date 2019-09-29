@@ -1,0 +1,196 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>固定资产</title>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'css/addr.css' %}">
+</head>
+<body>
+<div class="row">
+	{% for fixed in all_fixed %}
+		<div class="biaoti">
+			{% if "蒂凯姆" not in fixed.f_property.p_user.dept %}
+				<h4 style="padding-left: 20px">TITANSCI</h4>
+			{% else %}
+				<h4 style="padding-left: 20px">TITANCHEM</h4>
+			{% endif %}
+			<div class="headers">
+				<h1>固定资产个人申请领用登记表</h1>
+			</div>
+			<div class="date">
+				填表日期&nbsp;&nbsp;&nbsp;{{ fixed.f_time }}
+			</div>
+		</div>
+		<div class="btgn content">
+			<div class="c1" style="height: 318px">
+				<table style="border: 1px solid black; height: 318px" border="1" width="757" cellspacing="0">
+					<tr>
+						<td colspan="5">申请部门</td>
+						<td colspan="9">{{ fixed.f_property.p_user.dept }}</td>
+						<td colspan="3">工号</td>
+						<td colspan="4"></td>
+					</tr>
+					<tr>
+						<td colspan="5">申请人</td>
+						<td colspan="9">{{ fixed.f_property.p_user.name }}</td>
+						<td colspan="3">职务</td>
+						<td colspan="4"></td>
+
+					</tr>
+					<tr>
+						<td colspan="1">序号</td>
+						<td colspan="4">资产编号</td>
+						<td colspan="5">资产名称</td>
+						<td colspan="4">规格</td>
+						<td colspan="3">单价</td>
+						<td colspan="1">数量</td>
+						<td colspan="3">金额</td>
+					</tr>
+					<tr>
+						<td colspan="1">{{ forloop.counter }}</td>
+						<td colspan="4">{{ fixed.f_property.p_id }}</td>
+						<td colspan="5">{{ fixed.f_property.p_name }}</td>
+						<td colspan="4">{{ fixed.f_property.p_computers.type }}</td>
+						<td colspan="3">{{ fixed.f_property.p_price }}</td>
+						<td colspan="1">1</td>
+						<td colspan="3">{{ fixed.f_property.p_price }}</td>
+					</tr>
+					{% if fixed.f_property.equipment_set %}
+						{% for row in fixed.f_property.equipment_set.all %}
+							<tr>
+								<td colspan="1"></td>
+								<td colspan="4"></td>
+								<td colspan="5">{{ row.model_name }}</td>
+								<td colspan="4">{{ row.model_name }}</td>
+								<td colspan="3">{{ row.model_price }}</td>
+								<td colspan="1">{{ row.model_num }}</td>
+								<td colspan="3">{{ row.model_price }}</td>
+							</tr>
+						{% endfor %}
+						<tr>
+							<td colspan="1">2</td>
+							<td colspan="4"></td>
+							<td colspan="5"></td>
+							<td colspan="4"></td>
+							<td colspan="3"></td>
+							<td colspan="1"></td>
+							<td colspan="3"></td>
+						</tr>
+						<tr>
+							<td colspan="1">3</td>
+							<td colspan="4"></td>
+							<td colspan="5"></td>
+							<td colspan="4"></td>
+							<td colspan="3"></td>
+							<td colspan="1"></td>
+							<td colspan="3"></td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="1">2</td>
+							<td colspan="4"></td>
+							<td colspan="5"></td>
+							<td colspan="4"></td>
+							<td colspan="3"></td>
+							<td colspan="1"></td>
+							<td colspan="3"></td>
+						</tr>
+						<tr>
+							<td colspan="1">3</td>
+							<td colspan="4"></td>
+							<td colspan="5"></td>
+							<td colspan="4"></td>
+							<td colspan="3"></td>
+							<td colspan="1"></td>
+							<td colspan="3"></td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td colspan="17" style="text-align: right;font-size: 18px">
+							合计金额:
+						</td>
+						<td colspan="5" style="margin-left: 20px">{{ fixed.f_property.sum_price }}元</td>
+					</tr>
+				</table>
+			</div>
+			<div class="c2">
+				<div class="c21">
+					<p style="padding-top: 20px">领用原因
+
+						/
+						日期</p>
+				</div>
+				<div class="c22">
+					<ul style="list-style: none">
+						<li>口新入职申请设备</li>
+						<li>口原设备配置落后，升级</li>
+						<li>口原设备严重损坏，换新</li>
+						<li>口原设备报废</li>
+						<li>口业务需求新增设备</li>
+						<li>口其他（说明原因）</li>
+					</ul>
+				</div>
+			</div>
+			<div class="c2">
+				<div class="c21">
+					<p style="padding-top: 20px">领用人</p>
+				</div>
+				<div class="c22">
+					<h6 style="font-size: 14px;text-align: left;margin-top: 2px">
+						使用人承诺:本人申请的固定资产设备在使用期间如有因个人原因损坏、遗失的，造<br>
+						<p style="text-align: left;margin-top: -4px">成公司资产损失的将按照公司规定进行相应赔偿。</p>
+						<p class="c22-1">签字:</p>
+						<p class="c22-1">日期:</p>
+					</h6>
+				</div>
+			</div>
+			<div class="c2">
+				<div class="c21">
+					<p style="padding-top: 20px">设备使用部门</p>
+				</div>
+				<div class="c22">
+					<h6 style="font-size: 13px;text-align: left;margin-top: 2px">
+						设备使用部门将严格按照公司固定资产管理相关规定，监督管理设备的日常使用及维护，如古偶损坏、遗失等情况发盛，本部门将配合设备监管部门进行处理，并承担相应的责任
+
+						<p class="c22-1" style="margin-top: 40px">签字:</p>
+						<p class="c22-1" style="margin-top: 40px">日期:</p>
+					</h6>
+				</div>
+			</div>
+			<div class="c3">
+				<div class="c31">
+					<p>设备监管部门</p>
+				</div>
+				<div class="c32">
+					<h6 class="h6" style="margin-top: 40px">签字:</h6>
+					<h6 class="h6" style="margin-top: 40px">日期:</h6>
+				</div>
+			</div>
+			<div class="c3">
+				<div class="c31">
+					<p>总裁办
+
+						(
+						特批报备
+
+						)</p>
+				</div>
+				<div class="c32">
+					<h6 class="h6">签字:</h6>
+					<h6 class="h6">日期:</h6>
+				</div>
+			</div>
+			<div class="c3">
+				<div class="c31">
+					<p>备注</p>
+				</div>
+				<div class="c32">{{ fixed.f_time }}</div>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+</body>
+</html>

@@ -1,0 +1,164 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+	设备维护
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+{% endblock %}
+
+
+{% block main_context %}
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-12">
+						<ol class="breadcrumb float-sm-left">
+							<li class="breadcrumb-item"><a href="{% url 'home' %}">首页</a></li>
+							<li class="breadcrumb-item active">升级信息</li>
+						</ol>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card-info">
+							<div class="card-header">
+								<h3 class="card-title">维护列表</h3>
+								<div class="card-tools">
+
+									<form action="{% url 'equipment' %}" method="get">
+										<div class="input-group input-group-sm" style="width: 150px;">
+											<input type="text" name="search" class="form-control float-right"
+											       placeholder="Search">
+
+											<div class="input-group-append">
+												<button type="submit" class="btn btn-default"><i
+														class="fas fa-search"></i>
+												</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body table-responsive p-0">
+								<table class="table  table-bordered table-hover" id="example">
+									<div style="margin-left: 10px;margin-top: 10px">
+										<a href="{% url 'equipment' %}" class="btn btn-sm btn-success">显示全部</a>
+									</div>
+									<div style="height: 10px"></div>
+									<div style="margin-top: 10px">
+										<a href="#" class="btn btn-sm btn-secondary"
+										   style="margin-left: 10px">维护类型:</a>
+										{% for type in typeList %}
+											<a href="{% url 'equipment' %}?search={{ type }}"
+											   class="btn btn-info btn-xs" style="margin-left: 14px">
+												{% if type != '' %}
+													{{ type }}
+												{% endif %}
+											</a>
+										{% endfor %}
+
+									</div>
+									<div style="margin-top: 10px">
+										<a href="#" class="btn btn-sm btn-secondary"
+										   style="margin-left: 10px">维护人员:</a>
+										{% for name in nameList %}
+											<a href="{% url 'equipment' %}?search={{ name }}"
+											   class="btn btn-info btn-xs" style="margin-left: 14px">
+												{% if name != '' %}
+													{{ name }}
+												{% endif %}
+											</a>
+										{% endfor %}
+									</div>
+									<div style="height: 20px"></div>
+									<thead style="margin-top: 40px">
+									<tr>
+										<th>序号</th>
+										<th>申请时间</th>
+										<th>维护类型</th>
+										<th>设备编号</th>
+										<th>设备配件</th>
+										<th>单位</th>
+										<th>数量</th>
+										<th>维护金额</th>
+										<th>维护负责人</th>
+										<th>备注</th>
+									</tr>
+									</thead>
+									<tfoot>
+									{% for row in all_equipment %}
+										<tr>
+											<td>{{ forloop.counter }}</td>
+											<td>{{ row.add_time|date:'Y-m-d' }}</td>
+											<td>
+												{% if row.type == '升级设备' %}
+													<button class="btn btn-xs btn-warning">升级设备</button>
+												{% elif row.type == '维修设备' %}
+													<button class="btn btn-xs btn-danger">维修设备</button>
+												{% endif %}
+											</td>
+											<td>
+												<a href="{% url 'property_detail' row.propertys.p_id %}"
+												   class="btn btn-sm btn-info">{{ row.propertys.p_id }}</a>
+											</td>
+											<td>{{ row.model_name }}</td>
+											<td>{{ row.model_type }}
+											<td>{{ row.model_num }}</td>
+											<td>{{ row.model_price }}</td>
+											<td>{{ row.model_username }}</td>
+											<td>{{ row.note }}</td>
+										</tr>
+									{% endfor %}
+									</tfoot>
+								</table>
+							</div>
+							<!-- /.card-body -->
+							<div class="" style="float: left;margin-top: 15px;margin-left: 20px">
+								<div class="dataTables_info" id="example" role="status" aria-live="polite">
+									总数：<span class="badge badge-danger left">{{ all_equipment.count }}</span>
+								</div>
+								<div class="dataTables_paginate paging_simple_numbers"
+								     style="float: right ;margin-top: -25px;margin-right: 10px">
+									<div class="dataTables_paginate paging_simple_numbers">
+										<nav aria-label="Page navigation">
+											<ul class="pagination">
+												{{ page.show_li }}
+											</ul>
+										</nav>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!-- /.card -->
+					</div>
+				</div>
+				<div class="row">
+
+				</div>
+			</div>
+		</section>
+
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+{% endblock %}
+
+{% block js %}
+	<script>
+
+	</script>
+{% endblock %}

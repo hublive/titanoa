@@ -1,0 +1,171 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+	日常工作
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+{% endblock %}
+
+
+{% block main_context %}
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-12">
+						<ol class="breadcrumb float-sm-left">
+							<li class="breadcrumb-item"><a href="{% url 'home' %}">首页</a></li>
+							<li class="breadcrumb-item active">日常工作</li>
+						</ol>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card-info">
+							<div class="card-header">
+								<h3 class="card-title">日常工作列表</h3>
+								<div class="card-tools">
+
+									<form action="{% url 'works' %}" method="get">
+										<div class="input-group input-group-sm" style="width: 150px;">
+											<input type="text" name="search" class="form-control float-right"
+											       placeholder="Search">
+
+											<div class="input-group-append">
+												<button type="submit" class="btn btn-default"><i
+														class="fas fa-search"></i>
+												</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body table-responsive p-0">
+								<table class="table  table-bordered table-hover" id="example">
+									<div style="margin-left: 10px;margin-top: 10px">
+										<a href="{% url 'works' %}" class="btn btn-sm btn-success">显示全部</a>
+										<button  class="btn btn-sm btn-secondary">搜索总数：{{ all_num }}</button>
+									</div>
+									<div style="height: 10px"></div>
+									<div style="margin-top: 10px">
+										<a href="#" class="btn btn-sm btn-secondary"
+										   style="margin-left: 10px">问题类型:</a>
+										{% for name in nameList %}
+											<a href="{% url 'works' %}?search={{ name }}"
+											   class="btn btn-info btn-xs" style="margin-left: 14px">
+												{% if name != '' %}
+													{{ name }}
+												{% endif %}
+											</a>
+										{% endfor %}
+
+									</div>
+									<div style="margin-top: 10px">
+										<a href="#" class="btn btn-sm btn-secondary"
+										   style="margin-left: 10px">日期:</a>
+										{% for date in dateList %}
+											<a href="{% url 'works' %}?search={{ date }}"
+											   class="btn btn-info btn-xs" style="margin-left: 14px">
+												{% if date != '' %}
+													{{ date }}
+												{% endif %}
+											</a>
+										{% endfor %}
+									</div>
+									<div style="height: 20px"></div>
+									<thead style="margin-top: 40px">
+									<tr>
+										<th>序号</th>
+										<th>创建时间</th>
+										<th>提交人</th>
+										<th>问题设备</th>
+										<th>问题类型</th>
+										<th>问题描述</th>
+										<th>完成状态</th>
+										<th>维修人</th>
+									</tr>
+									</thead>
+									<tfoot>
+									{% for row in all_job %}
+										<tr>
+											<td>{{ forloop.counter }}</td>
+											<td>
+												{{ row.createTime }}
+											</td>
+											<td>{{ row.username.name }}</td>
+											<td>
+												{% if row.username.property_set.all %}
+													{% for fied in row.username.property_set.all %}
+														<a class="btn btn-block btn-outline-warning btn-sm"
+												   href="{% url 'property_detail' fied.p_id %}">{{ fied.p_id }}</a>
+													{% endfor %}
+												{% else %}
+													暂未统计
+												{% endif %}
+											</td>
+											<td>{{ row.typejobs.name }}</td>
+											<td>{{ row.note }}</td>
+											<td>
+												{% if row.status %}
+													<button class="btn btn-sm btn-success">完成</button>
+												{% endif %}
+											</td>
+											<td>{% if row.jobuser == 'hub' %}
+												<button class="btn btn-sm btn-dark">胡兵</button>
+											{% else %}
+												<button class="btn btn-sm btn-dark">杨学铭</button>
+											{% endif %}</td>
+										</tr>
+									{% endfor %}
+									</tfoot>
+								</table>
+							</div>
+							<!-- /.card-body -->
+							<div class="" style="float: left;margin-top: 15px;margin-left: 20px">
+								<div class="dataTables_info" id="example" role="status" aria-live="polite">
+									总数：<span class="badge badge-success left">{{ jobs.count }}</span>
+								</div>
+								<div class="dataTables_paginate paging_simple_numbers"
+								     style="float: right ;margin-top: -25px;margin-right: 10px">
+									<div class="dataTables_paginate paging_simple_numbers">
+										<nav aria-label="Page navigation">
+											<ul class="pagination">
+												{{ page.show_li }}
+											</ul>
+										</nav>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!-- /.card -->
+					</div>
+				</div>
+				<div class="row">
+
+				</div>
+			</div>
+		</section>
+
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+{% endblock %}
+
+{% block js %}
+	<script>
+
+	</script>
+{% endblock %}

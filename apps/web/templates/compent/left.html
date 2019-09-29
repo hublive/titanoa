@@ -1,0 +1,186 @@
+<aside class="main-sidebar sidebar-red">
+	<!-- Brand Logo -->
+	<a href="{% url 'home' %}" class="brand-link">
+		<img src="/static/image/1.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+		     style="opacity: .8">
+		<span class="brand-text font-weight-light">Ttian Admin</span>
+	</a>
+
+	<!-- Sidebar -->
+	<div class="sidebar">
+		<!-- Sidebar user panel (optional) -->
+
+		{#		<div class="user-panel mt-3 pb-3 mb-3 d-flex" >#}
+		{#			<div >#}
+		{#				<img src="/media/{{ request.user.aravtr }}" class="img-circle elevation-2" alt="User Image">#}
+		{#			</div>#}
+		{#			<div class="info" style="margin-top: 7px">#}
+		{#				<a href="#" class="d-block">{{ request.user.nickname }}</a>#}
+		{#			</div>#}
+		{#		</div>#}
+
+		<!-- Sidebar Menu -->
+		<nav class="mt-2 sidebar">
+			<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+			    data-accordion="false">
+				<li class="nav-header" style="margin-left: 0">基础信息</li>
+				<li class="nav-item has-treeview ">
+					<a href="#" class="nav-link">
+						<i class="nav-icon fas fa-sitemap"></i>
+						<p>
+							基础信息
+							<i class="fas fa-angle-left right"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview title_ul" style="margin-left: 30px" id="test">
+						<li class="nav-item organization">
+							<a href="{% url 'organization' %}" class="nav-link"
+							   style="margin-left: 2px">
+								<i class="fa fa-address-card"></i>
+								<p style="margin-left: 4px">供 应 商</p>
+							</a>
+						</li>
+						<li class="nav-item userinfo">
+							<a href="{% url 'userinfo' %}" class="nav-link">
+								<i class="fa fa-users"></i>
+								<p style="margin-left: 2px">员工信息</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{% url 'property' %}" class="nav-link">
+								<i class="fa fa-compact-disc"></i>
+								<p style="margin-left: 2px">资产详情</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{% url 'computer' %}" class="nav-link">
+								<i class="fa fa-tv"></i>
+								<p style="margin-left: 2px">设备配置</p>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-header">行政相关</li>
+				<li class="nav-item has-treeview">
+					<a href="#" class="nav-link">
+						<i class="nav-icon fa fa-user-secret"></i>
+						<p>
+							工作相关
+							<i class="fas fa-angle-left right"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview" style="margin-left: 30px" id="test">
+						<li class="nav-item">
+							<a href="{% url 'works' %}" class="nav-link" style="margin-left: 2px">
+								<i class="fa fa-user-astronaut"></i>
+								<p style="margin-left: 4px">日常工作</p>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item has-treeview">
+					<a href="#" class="nav-link">
+						<i class="nav-icon fas fa-print"></i>
+						<p>
+							行政打印机
+							<i class="fas fa-angle-left right"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview" style="margin-left: 30px">
+						<li class="nav-item">
+							<a href="{% url 'prints' %}" class="nav-link" style="margin-left: 2px">
+								<i class="fa fa-print"></i>
+								<p style="margin-left: 4px">打印耗材</p>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item has-treeview">
+					<a href="#" class="nav-link">
+						<i class="nav-icon fas fa-desktop"></i>
+						<p>
+							行政资产
+							<i class="fas fa-angle-left right"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview" id="test" style="margin-left: 30px">
+						<li class="nav-item">
+							<a href="{% url 'fixedAssets' %}" class="nav-link" style="margin-left: 2px">
+								<i class="fa fa-tv"></i>
+								<p style="margin-left: 4px">固定资产</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{% url 'equipment' %}" class="nav-link">
+								<i class="fa fa-tv"></i>
+								<p style="margin-left: 2px">设备升级</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{% url 'check' %}" class="nav-link">
+								<i class="fa fa-tv"></i>
+								<p style="margin-left: 2px">设备验收</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{% url 'baofei' %}" class="nav-link">
+								<i class="fa fa-tv"></i>
+								<p style="margin-left: 2px">设备报废</p>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-header">办公用品</li>
+				<li class="nav-item has-treeview">
+					<a href="#" class="nav-link">
+						<i class="nav-icon fas fa-inbox"></i>
+						<p>
+							办公用品
+							<i class="fas fa-angle-left right"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview" style="margin-left: 30px">
+						<li class="nav-item">
+							<a href="{% url 'job_works' %}" class="nav-link" style="margin-left: 2px">
+								<i class="fa fa-user-astronaut"></i>
+								<p style="margin-left: 4px">物流快递信息</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link" style="margin-left: 2px">
+								<i class="fa fa-cube"></i>
+								<p style="margin-left: 4px">物品信息</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link">
+								<i class="fa fa-database"></i>
+								<p style="">库存信息</p>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-header">报表展示</li>
+				<li class="nav-item has-treeview">
+					<a href="#" class="nav-link">
+						<i class="nav-icon fas fa-inbox"></i>
+						<p>
+							月度展示
+							<i class="fas fa-angle-left right"></i>
+						</p>
+					</a>
+					<ul class="nav nav-treeview" style="margin-left: 30px">
+						<li class="nav-item">
+							<a href="{% url 'job_detail' %}" class="nav-link" style="margin-left: 2px">
+								<i class="fa fa-user-astronaut"></i>
+								<p style="margin-left: 4px">IT工作整理</p>
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+		<!-- /.sidebar-menu -->
+	</div>
+	<!-- /.sidebar -->
+</aside>

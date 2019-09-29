@@ -1,0 +1,156 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+	供应商信息
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block main_context %}
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-left">
+							<li class="breadcrumb-item"><a href="{% url 'home' %}">首页</a></li>
+							<li class="breadcrumb-item active">供应商</li>
+						</ol>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card card-info">
+							<div class="card-header">
+								<h3 class="card-title">供应商列表</h3>
+								<div class="card-tools">
+									<form action="{% url 'organization' %}" method="get">
+										<div class="input-group input-group-sm" style="width: 150px;">
+											<input type="text" name="search" class="form-control float-right"
+											       placeholder="Search">
+
+											<div class="input-group-append">
+												<button type="submit" class="btn btn-default"><i
+														class="fas fa-search"></i>
+												</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body table-responsive p-0">
+								<table class="table  table-bordered table-hover" id="example">
+									<div class="1" style="height: 10px"></div>
+									<div style="margin-left: 10px">
+										<a href="{% url 'organization' %}" class="btn btn-sm btn-success">显示全部</a>
+									</div>
+									<div style="height: 10px"></div>
+									<div style="margin-left: 10px">
+										<a href="#" class="btn btn-sm btn-secondary">筛选人员</a>
+										{% for users in username %}
+											{% for k,user in users.items %}
+												<a href="{% url 'organization' %}?search={{ user }}"
+												   class="btn btn-info btn-xs" style="margin-left: 20px">
+													{% if user == '王佳1' %}
+														王佳
+													{% else %}
+														{{ user }}
+													{% endif %}
+												</a>
+											{% endfor %}
+										{% endfor %}
+									</div>
+									<thead>
+									<tr>
+										<th>序号</th>
+										<th>供应商名称</th>
+										<th>所属人</th>
+										<th>供应商类型</th>
+										<th>联系电话</th>
+										<th>公司地址</th>
+										<th>当前状态</th>
+										<th>服务范围</th>
+									</tr>
+									</thead>
+									<tfoot>
+									{% for row in all_organization %}
+										<tr>
+											<td>{{ forloop.counter }}</td>
+											<td>
+												{{ row.name }}
+											</td>
+											<td>
+												{% if row.users.name == '王佳1' %}
+													王佳
+												{% else %}
+													{{ row.users.name }}
+												{% endif %}
+											</td>
+											<td>
+												{% if row.type  == 'gt' %}
+													<button class="btn btn-xs btn-info">个体经营</button>
+												{% else %}
+													<button class="btn btn-xs btn-warning">互联网</button>
+												{% endif %}
+											</td>
+											<td>{{ row.phone }}</td>
+											<td>{{ row.addr }}</td>
+											<td>
+												{% if row.status == True %}
+													<button class="btn btn-xs btn-success">启用</button>
+												{% else %}
+													<button class="btn btn-xs btn-danger">停用</button>
+												{% endif %}
+											</td>
+											<td>{{ row.note }}</td>
+										</tr>
+									{% endfor %}
+									</tfoot>
+								</table>
+							</div>
+							<!-- /.card-body -->
+							<div class="" style="float: left;margin-top: 15px;margin-left: 20px">
+								<div class="dataTables_info" id="example" role="status" aria-live="polite"
+								>
+									总数：<span class="badge badge-danger left">{{ all_organization.count }}</span>
+								</div>
+								<div class="" style="float: right ;margin-top: -25px;margin-right: 10px">
+									<nav aria-label="Page navigation btn-group">
+										<ul class="pagination">
+											{{ pag.show_li }}
+										</ul>
+									</nav>
+								</div>
+							</div>
+
+						</div>
+						<!-- /.card -->
+					</div>
+				</div>
+				<div class="row">
+
+				</div>
+			</div>
+		</section>
+
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+{% endblock %}
+
+{% block js %}
+	<script>
+
+	</script>
+{% endblock %}
